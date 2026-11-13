@@ -1,0 +1,137 @@
+
+:root {
+  --bf-fondo: #f3f6f9;        
+  --bf-oscuro: #0b1626;       
+  --bf-lateral: #0e1c2e;      
+  --bf-activo: #17314a;       
+  --bf-acento: #1ea7f5;       
+  --bf-morado: #8b5cf6;       
+}
+
+/* ---------- 2. BASE ---------- */
+body {
+  background: var(--bf-fondo);   
+  font-size: 0.92rem;            
+}
+
+/* ---------- 3. BARRA SUPERIOR ---------- */
+.bf-topbar {
+  background: var(--bf-oscuro);  
+  min-height: 58px;              
+}
+
+/* ---------- 4. MENÚ LATERAL ---------- */
+.bf-side {
+  background: var(--bf-lateral); 
+  --bs-offcanvas-width: 260px;   
+}
+@media (min-width: 992px) {      
+  .bf-side {
+    min-height: calc(100vh - 58px);        
+    background: var(--bf-lateral) !important; 
+  }
+}
+.side-title {                    
+  margin: 14px 18px 4px;         
+  font-size: 0.65rem;            
+  letter-spacing: 0.12em;        
+  color: #3fb4f7;               
+  font-weight: 600;
+}
+.bf-side .nav-link {             
+  color: #b8c7d6;               
+  border-radius: 0;              
+  border-left: 3px solid transparent; 
+  padding: 0.5rem 1.1rem;
+}
+.bf-side .nav-link:hover {       
+  background: #12263b;
+  color: #fff;
+}
+.bf-side .nav-link.active {      
+  background: var(--bf-activo);
+  color: #fff;
+  border-left-color: var(--bf-acento); 
+}
+
+/* ---------- 5. TARJETAS DE INDICADORES (KPI) ---------- */
+.kpi-value {                     
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+  display: block;
+}
+.card-new {                      
+  border-style: dashed;
+}
+
+/* ---------- 6. GRÁFICO DE BARRAS ---------- */
+.bars-box { min-height: 190px; }          
+.bar-area { height: 165px; }              
+.bar {                                    
+  width: 36px;
+  border-radius: 5px 5px 0 0;             
+  position: relative;                     
+}
+.bar-std { background: #94a3b8; }        
+.bar-val {                                
+  position: absolute;
+  top: -18px;
+  left: 0;
+  right: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ---------- 7. LEYENDAS ---------- */
+.dot {                                    
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+.bg-purple { background: var(--bf-morado); }   
+
+/* ---------- 8. MAPA DE HABITACIONES ---------- */
+.room-map {
+  display: grid;                           
+  grid-template-columns: repeat(10, 1fr);  
+  gap: 5px;                                
+}
+.room {                                    
+  aspect-ratio: 1;                         
+  border-radius: 6px;
+  display: grid;
+  place-items: center;                     
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #fff;
+}
+.room-success { background: var(--bs-success); }  
+.room-primary { background: var(--bs-primary); }  
+.room-warning { background: var(--bs-warning); }  
+.room-danger  { background: var(--bs-danger); }   
+.room-purple  { background: var(--bf-morado); }   
+
+/* ---------- 9. EVENTOS Y MINIATURAS DE FOTO ---------- */
+.ev-line {                                 
+  width: 5px;
+  height: 36px;
+  border-radius: 3px;
+  flex-shrink: 0;                          
+}
+.thumb {                                   
+  width: 46px;
+  height: 34px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #6b7f93, #a9b8c6); 
+  display: grid;
+  place-items: center;
+  font-size: 0.55rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+.thumb-antes {                             
+  background: linear-gradient(135deg, #8c6a52, #c2a68f);
+}

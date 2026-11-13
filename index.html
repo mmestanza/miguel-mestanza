@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BedFlow – Prototipo</title>
+  <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="dist/css/stylesN.css">
+</head>
+
+<body>
+  <header class="navbar navbar-dark bf-topbar sticky-top px-3 gap-2">
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+      aria-label="Abrir menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand fw-bold me-auto" href="#">
+      🛏 Bed
+      <span class="text-info">Flow</span>
+    </a>
+    <select class="form-select form-select-sm w-auto d-none d-md-block" aria-label="Hotel">
+      <option>Hotel Miraflores</option>
+      <option>Hotel San Isidro</option>
+    </select>
+    <select class="form-select form-select-sm w-auto d-none d-md-block" aria-label="Turno">
+      <option>Todos los turnos</option>
+      <option>Mañana</option>
+      <option>Tarde</option>
+      <option>Noche</option>
+    </select>
+    <input class="form-control form-control-sm w-auto d-none d-md-block" type="date" value="2026-10-30"
+      aria-label="Fecha">
+    <button class="btn btn-sm btn-outline-light position-relative" type="button">
+      🔔
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">4</span>
+    </button>
+    <span class="badge rounded-pill text-bg-dark px-3 py-2">👤 Admin</span>
+  </header>
+  <div class="container-fluid">
+    <div class="row">
+      <aside class="offcanvas-lg offcanvas-start col-lg-2 bf-side p-0" id="sidebar" tabindex="-1">
+        <div class="offcanvas-header d-lg-none">
+          <strong class="text-white">Menú principal</strong>
+          <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+            aria-label="Cerrar"></button>
+        </div>
+        <nav class="nav flex-column nav-pills py-2" role="tablist">
+          <p class="side-title">OPERACIÓN</p>
+          <button class="nav-link text-start d-flex align-items-center gap-2 active" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-panel" role="tab">
+            <span>📊</span>
+            <span>Panel en vivo</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-prog" role="tab">
+            <span>🗓</span>
+            <span>Programación</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-eventos" role="tab">
+            <span>📷</span>
+            <span>Eventos y evidencias</span>
+            <span class="badge text-bg-danger ms-auto rounded-pill">3</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-mant" role="tab">
+            <span>🛠</span>
+            <span>Mantenimiento</span>
+            <span class="badge text-bg-danger ms-auto rounded-pill">3</span>
+          </button>
+          <p class="side-title">GESTIÓN</p>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-tiempos" role="tab">
+            <span>⏱</span>
+            <span>Tiempos y estándares</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-personal" role="tab">
+            <span>👥</span>
+            <span>Personal</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-tareo" role="tab">
+            <span>🧾</span>
+            <span>Tareo y pagos</span>
+          </button>
+          <p class="side-title">ANÁLISIS</p>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-dash" role="tab">
+            <span>📈</span>
+            <span>Dashboards</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-rep" role="tab">
+            <span>📑</span>
+            <span>Reportes</span>
+          </button>
+          <p class="side-title">ADMINISTRACIÓN</p>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-cat" role="tab">
+            <span>🏨</span>
+            <span>Catálogos</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-seg" role="tab">
+            <span>🔐</span>
+            <span>Seguridad y roles</span>
+          </button>
+          <button class="nav-link text-start d-flex align-items-center gap-2" type="button" data-bs-toggle="pill"
+            data-bs-target="#v-cfg" role="tab">
+            <span>⚙</span>
+            <span>Configuración</span>
+          </button>
+        </nav>
+      </aside>
+      <main class="col-lg-10 p-3 p-lg-4">
+        <div class="tab-content">
+          <section class="tab-pane fade show active" id="v-panel" role="tabpanel">
+            <h2 class="h4 mb-0">Panel en vivo</h2>
+            <p class="text-secondary small mb-3">Viernes 30 de octubre de 2026 · Hotel Miraflores · Actualizado hace
+              unos segundos</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Resumen del día</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Estado de habitaciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Alertas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Actividad</a>
+              </li>
+            </ul>
+            <div class="row row-cols-2 row-cols-lg-4 g-3 mb-3">
+              <div class="col">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Habitaciones limpias</small>
+                    <span class="kpi-value text-success">42 / 50</span>
+                    <small class="text-secondary d-block">84 % de avance · 5 en inspección</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Tiempo promedio</small>
+                    <span class="kpi-value text-primary">28 min</span>
+                    <small class="text-secondary d-block">▲ 2 min sobre el estándar (26)</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Operarios activos</small>
+                    <span class="kpi-value text-warning">12 / 14</span>
+                    <small class="text-secondary d-block">2 sin iniciar turno</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Incidencias hoy</small>
+                    <span class="kpi-value text-danger">3</span>
+                    <small class="text-secondary d-block">1 alta · 2 media → Mantenimiento</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 shadow-sm card-new">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Eficiencia global</small>
+                    <span class="kpi-value text-success">93 %</span>
+                    <small class="text-secondary d-block">estándar ÷ real</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 shadow-sm card-new">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Re-limpiezas</small>
+                    <span class="kpi-value text-warning">2</span>
+                    <small class="text-secondary d-block">devueltas por supervisor</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 shadow-sm card-new">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Listas para check-in</small>
+                    <span class="kpi-value text-primary">9 / 12</span>
+                    <small class="text-secondary d-block">3 llegadas a las 14:00</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 shadow-sm card-new">
+                  <div class="card-body py-3">
+                    <small class="text-secondary d-block">Alertas activas</small>
+                    <span class="kpi-value text-danger">4</span>
+                    <small class="text-secondary d-block">fuera de tolerancia o sin iniciar</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-lg-8">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h3 class="h6 d-flex justify-content-between">
+                      Rendimiento por turno: estándar vs. real (min)
+                      <span class="badge rounded-pill text-bg-primary">Todos los turnos</span>
+                    </h3>
+                    <div class="row bars-box align-items-end">
+                      <div class="col text-center">
+                        <div class="d-flex justify-content-center align-items-end gap-2 bar-area">
+                          <div class="bar bar-std" style="height:104px">
+                            <span class="bar-val">26</span>
+                          </div>
+                          <div class="bar bg-success" style="height:96px">
+                            <span class="bar-val">24</span>
+                          </div>
+                        </div>
+                        <div class="small mt-1">
+                          Mañana
+                          <span class="badge rounded-pill text-bg-success">108 %</span>
+                        </div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="d-flex justify-content-center align-items-end gap-2 bar-area">
+                          <div class="bar bar-std" style="height:128px">
+                            <span class="bar-val">32</span>
+                          </div>
+                          <div class="bar bg-warning" style="height:144px">
+                            <span class="bar-val">36</span>
+                          </div>
+                        </div>
+                        <div class="small mt-1">
+                          Tarde
+                          <span class="badge rounded-pill text-bg-warning">89 %</span>
+                        </div>
+                      </div>
+                      <div class="col text-center">
+                        <div class="d-flex justify-content-center align-items-end gap-2 bar-area">
+                          <div class="bar bar-std" style="height:88px">
+                            <span class="bar-val">22</span>
+                          </div>
+                          <div class="bar bg-success" style="height:84px">
+                            <span class="bar-val">21</span>
+                          </div>
+                        </div>
+                        <div class="small mt-1">
+                          Noche
+                          <span class="badge rounded-pill text-bg-success">105 %</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="small text-secondary mt-2">
+                      <span class="me-3">
+                        <i class="dot bg-secondary"></i>
+                        Estándar
+                      </span>
+                      <span class="me-3 text-nowrap d-inline-block">
+                        <i class="dot bg-success"></i>
+                        Real (dentro de tolerancia)
+                      </span>
+                      <span class="me-3 text-nowrap d-inline-block">
+                        <i class="dot bg-warning"></i>
+                        Real (sobre tolerancia)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h3 class="h6">Alertas activas</h3>
+                    <div class="alert alert-danger py-2 small">⏱ Hab. 312 lleva 58 min (est. 35) · Carlos R.</div>
+                    <div class="alert alert-warning py-2 small">🚶 Rosa T. no inicia su 1.ª habitación (07:30)</div>
+                    <div class="alert alert-warning py-2 small">⭐ Hab. 215 VIP pendiente · llegada 12:00</div>
+                    <div class="alert alert-danger py-2 small">📷 Foto rechazada: duplicada de hab. 204</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-lg-8">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h3 class="h6">Últimos eventos registrados</h3>
+                    <div class="mb-2 d-flex flex-wrap gap-1">
+                      <button class="btn btn-sm btn-primary rounded-pill" type="button">Todos</button>
+                      <button class="btn btn-sm btn-outline-secondary rounded-pill" type="button">Limpieza</button>
+                      <button class="btn btn-sm btn-outline-secondary rounded-pill" type="button">Incidencia</button>
+                      <button class="btn btn-sm btn-outline-secondary rounded-pill" type="button">Inspección</button>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item d-flex align-items-center gap-2 px-0 bg-transparent">
+                        <span class="ev-line bg-success"></span>
+                        <div class="thumb thumb-antes">ANTES</div>
+                        <div class="thumb">DESPUÉS</div>
+                        <div class="small">
+                          <strong>10:15 – Hab. 204: </strong>
+                          Aseo finalizado
+                          <span class="text-secondary">(Juan P.)</span>
+                          <br>
+                          <span class="text-secondary">28 min · est. 25 · foto verificada ✔</span>
+                        </div>
+                      </li>
+                      <li class="list-group-item d-flex align-items-center gap-2 px-0 bg-transparent">
+                        <span class="ev-line bg-primary"></span>
+                        <div class="thumb thumb-antes">ANTES</div>
+                        <div class="thumb">DESPUÉS</div>
+                        <div class="small">
+                          <strong>09:50 – Hab. 102: </strong>
+                          Inicio de limpieza
+                          <span class="text-secondary">(María L.)</span>
+                          <br>
+                          <span class="text-secondary">en curso · foto verificada ✔</span>
+                        </div>
+                      </li>
+                      <li class="list-group-item d-flex align-items-center gap-2 px-0 bg-transparent">
+                        <span class="ev-line bg-warning"></span>
+                        <div class="thumb thumb-antes">ANTES</div>
+                        <div class="thumb">DESPUÉS</div>
+                        <div class="small">
+                          <strong>09:30 – Hab. 305: </strong>
+                          Objeto olvidado
+                          <span class="text-secondary">(Rosa T.)</span>
+                          <br>
+                          <span class="text-secondary">foto adjunta · foto verificada ✔</span>
+                        </div>
+                      </li>
+                      <li class="list-group-item d-flex align-items-center gap-2 px-0 bg-transparent">
+                        <span class="ev-line bg-primary"></span>
+                        <div class="thumb thumb-antes">ANTES</div>
+                        <div class="thumb">DESPUÉS</div>
+                        <div class="small">
+                          <strong>09:15 – Hab. 110: </strong>
+                          Inicio de aseo
+                          <span class="text-secondary">(Carlos R.)</span>
+                          <br>
+                          <span class="text-secondary">en curso · foto verificada ✔</span>
+                        </div>
+                      </li>
+                      <li class="list-group-item d-flex align-items-center gap-2 px-0 bg-transparent">
+                        <span class="ev-line bg-success"></span>
+                        <div class="thumb thumb-antes">ANTES</div>
+                        <div class="thumb">DESPUÉS</div>
+                        <div class="small">
+                          <strong>08:45 – Hab. 201: </strong>
+                          Inspección aprobada
+                          <span class="text-secondary">(Sup. Ana G.)</span>
+                          <br>
+                          <span class="text-secondary">1.ª vez · foto verificada ✔</span>
+                        </div>
+                      </li>
+                      <li class="list-group-item d-flex align-items-center gap-2 px-0 bg-transparent">
+                        <span class="ev-line bg-danger"></span>
+                        <div class="thumb thumb-antes">ANTES</div>
+                        <div class="thumb">DESPUÉS</div>
+                        <div class="small">
+                          <strong>08:30 – Hab. 212: </strong>
+                          Incidencia: TV sin señal
+                          <span class="text-secondary">(Luis M.)</span>
+                          <br>
+                          <span class="text-secondary">→ Mantenimiento · foto verificada ✔</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card h-100 shadow-sm">
+                  <div class="card-body">
+                    <h3 class="h6">Estado de habitaciones</h3>
+                    <!-- Mapa: cuadrícula de 10 columnas definida en styles.css (.room-map) -->
+                    <div class="room-map">
+                      <div class="room room-success">101</div>
+                      <div class="room room-success">102</div>
+                      <div class="room room-success">103</div>
+                      <div class="room room-success">104</div>
+                      <div class="room room-success">105</div>
+                      <div class="room room-success">106</div>
+                      <div class="room room-success">107</div>
+                      <div class="room room-success">108</div>
+                      <div class="room room-success">109</div>
+                      <div class="room room-success">110</div>
+                      <div class="room room-success">111</div>
+                      <div class="room room-success">112</div>
+                      <div class="room room-success">113</div>
+                      <div class="room room-success">114</div>
+                      <div class="room room-success">115</div>
+                      <div class="room room-success">116</div>
+                      <div class="room room-success">117</div>
+                      <div class="room room-success">118</div>
+                      <div class="room room-success">119</div>
+                      <div class="room room-success">120</div>
+                      <div class="room room-success">121</div>
+                      <div class="room room-success">122</div>
+                      <div class="room room-success">123</div>
+                      <div class="room room-success">124</div>
+                      <div class="room room-success">125</div>
+                      <div class="room room-success">126</div>
+                      <div class="room room-success">127</div>
+                      <div class="room room-success">128</div>
+                      <div class="room room-success">129</div>
+                      <div class="room room-success">130</div>
+                      <div class="room room-success">131</div>
+                      <div class="room room-success">132</div>
+                      <div class="room room-success">133</div>
+                      <div class="room room-success">134</div>
+                      <div class="room room-success">135</div>
+                      <div class="room room-primary">136</div>
+                      <div class="room room-success">137</div>
+                      <div class="room room-success">138</div>
+                      <div class="room room-success">139</div>
+                      <div class="room room-warning">140</div>
+                      <div class="room room-success">141</div>
+                      <div class="room room-success">142</div>
+                      <div class="room room-purple">143</div>
+                      <div class="room room-success">144</div>
+                      <div class="room room-success">145</div>
+                      <div class="room room-danger">146</div>
+                      <div class="room room-success">147</div>
+                      <div class="room room-success">148</div>
+                      <div class="room room-success">149</div>
+                      <div class="room room-primary">150</div>
+                    </div>
+                    <div class="small text-secondary mt-2">
+                      <span class="me-3 text-nowrap d-inline-block">
+                        <i class="dot bg-success"></i>
+                        Aprobada
+                      </span>
+                      <span class="me-3 text-nowrap d-inline-block">
+                        <i class="dot bg-primary"></i>
+                        En limpieza
+                      </span>
+                      <span class="me-3 text-nowrap d-inline-block">
+                        <i class="dot bg-warning"></i>
+                        Inspección
+                      </span>
+                      <span class="me-3 text-nowrap d-inline-block">
+                        <i class="dot bg-purple"></i>
+                        Sucia
+                      </span>
+                      <span class="me-3 text-nowrap d-inline-block">
+                        <i class="dot bg-danger"></i>
+                        Bloqueada
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-prog" role="tabpanel">
+            <h2 class="h4 mb-0">Programación · Asignación diaria</h2>
+            <p class="text-secondary small mb-3">Asigne operario por cuarto, turno y fecha. La carga se balancea por
+              minutos estándar.</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Asignación diaria</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Asignación masiva</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Reasignaciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Limpieza profunda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Importar salidas</a>
+              </li>
+            </ul>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <button class="btn btn-primary btn-sm" type="button">⚡ Asignar automáticamente</button>
+              <button class="btn btn-outline-secondary btn-sm" type="button">Copiar de ayer</button>
+              <button class="btn btn-outline-secondary btn-sm" type="button">Notificar operarios</button>
+            </div>
+            <div class="row g-3">
+              <div class="col-lg-8">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-sm align-middle mb-0">
+                        <thead>
+                          <tr>
+                            <th>Hab.</th>
+                            <th>Tipo</th>
+                            <th>Limpieza</th>
+                            <th>Est.</th>
+                            <th>VIP</th>
+                            <th>Operario</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="fw-bold">101</td>
+                            <td>1 cama</td>
+                            <td>Salida</td>
+                            <td>25 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option selected>Juan P.</option>
+                                <option>María L.</option>
+                                <option>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">102</td>
+                            <td>2 camas</td>
+                            <td>Salida</td>
+                            <td>35 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option selected>María L.</option>
+                                <option>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">103</td>
+                            <td>1 cama</td>
+                            <td>Ocupada</td>
+                            <td>15 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option>María L.</option>
+                                <option selected>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">104</td>
+                            <td>3 camas</td>
+                            <td>Salida</td>
+                            <td>45 min</td>
+                            <td>
+                              <span class="badge text-bg-warning">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option>María L.</option>
+                                <option>Carlos R.</option>
+                                <option selected>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">105</td>
+                            <td>2 camas</td>
+                            <td>Ocupada</td>
+                            <td>20 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option>María L.</option>
+                                <option>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option selected>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">106</td>
+                            <td>1 cama</td>
+                            <td>Profunda</td>
+                            <td>50 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option selected>Juan P.</option>
+                                <option>María L.</option>
+                                <option>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">107</td>
+                            <td>2 camas</td>
+                            <td>Salida</td>
+                            <td>35 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option selected>María L.</option>
+                                <option>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">108</td>
+                            <td>3 camas</td>
+                            <td>Ocupada</td>
+                            <td>25 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option>María L.</option>
+                                <option selected>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">109</td>
+                            <td>1 cama</td>
+                            <td>Salida</td>
+                            <td>25 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option selected>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option>María L.</option>
+                                <option>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="fw-bold">110</td>
+                            <td>2 camas</td>
+                            <td>Salida</td>
+                            <td>35 min</td>
+                            <td>
+                              <span class="badge text-bg-light border">⭐</span>
+                            </td>
+                            <td>
+                              <select class="form-select form-select-sm w-auto">
+                                <option selected>Sin asignar</option>
+                                <option>Juan P.</option>
+                                <option>María L.</option>
+                                <option>Carlos R.</option>
+                                <option>Rosa T.</option>
+                                <option>Luis M.</option>
+                              </select>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h3 class="h6">Carga por operario (turno mañana)</h3>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between small">
+                        <span>Juan P.</span>
+                        <span>75 min · 2 hab.</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" style="width:83%" role="progressbar"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between small">
+                        <span>María L.</span>
+                        <span>70 min · 2 hab.</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" style="width:78%" role="progressbar"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between small">
+                        <span>Carlos R.</span>
+                        <span>40 min · 2 hab.</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" style="width:44%" role="progressbar"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between small">
+                        <span>Rosa T.</span>
+                        <span>45 min · 1 hab.</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" style="width:50%" role="progressbar"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="d-flex justify-content-between small">
+                        <span>Luis M.</span>
+                        <span>20 min · 1 hab.</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" style="width:22%" role="progressbar"></div>
+                      </div>
+                    </div>
+                    <p class="small text-secondary mb-0">
+                      Sin asignar:
+                      <strong>2</strong>
+                      habitaciones
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-eventos" role="tabpanel">
+            <h2 class="h4 mb-0">Eventos y evidencias</h2>
+            <p class="text-secondary small mb-3">Inicio y fin con foto controlada · incidencias enviadas a Mantenimiento
+            </p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Actividad</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Inicio / Fin con foto</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Inspección</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Pausas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Objetos olvidados</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Galería</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h3 class="h6 d-flex justify-content-between">
+                  Limpiezas del día
+                  <span class="badge rounded-pill text-bg-success">Fotos validadas por servidor</span>
+                </h3>
+                <div class="table-responsive">
+                  <table class="table table-sm align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>Hab.</th>
+                        <th>Operario</th>
+                        <th>Estándar</th>
+                        <th>Real</th>
+                        <th>Estado</th>
+                        <th>Evidencia</th>
+                        <th>Control</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="fw-bold">204</td>
+                        <td>Juan P.</td>
+                        <td>25 min</td>
+                        <td>28 min</td>
+                        <td>
+                          <span class="badge text-bg-warning">Fin</span>
+                        </td>
+                        <td>
+                          <div class="d-flex gap-1">
+                            <div class="thumb thumb-antes">ANTES</div>
+                            <div class="thumb">DESP.</div>
+                          </div>
+                        </td>
+                        <td class="small text-secondary">QR ✔ · hora servidor ✔ · hash único ✔</td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">102</td>
+                        <td>María L.</td>
+                        <td>35 min</td>
+                        <td>—</td>
+                        <td>
+                          <span class="badge text-bg-primary">En curso</span>
+                        </td>
+                        <td>
+                          <div class="d-flex gap-1">
+                            <div class="thumb thumb-antes">ANTES</div>
+                            <div class="thumb">DESP.</div>
+                          </div>
+                        </td>
+                        <td class="small text-secondary">QR ✔ · hora servidor ✔ · hash único ✔</td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">110</td>
+                        <td>Carlos R.</td>
+                        <td>35 min</td>
+                        <td>—</td>
+                        <td>
+                          <span class="badge text-bg-primary">En curso</span>
+                        </td>
+                        <td>
+                          <div class="d-flex gap-1">
+                            <div class="thumb thumb-antes">ANTES</div>
+                            <div class="thumb">DESP.</div>
+                          </div>
+                        </td>
+                        <td class="small text-secondary">QR ✔ · hora servidor ✔ · hash único ✔</td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">201</td>
+                        <td>Rosa T.</td>
+                        <td>35 min</td>
+                        <td>31 min</td>
+                        <td>
+                          <span class="badge text-bg-success">Aprobada</span>
+                        </td>
+                        <td>
+                          <div class="d-flex gap-1">
+                            <div class="thumb thumb-antes">ANTES</div>
+                            <div class="thumb">DESP.</div>
+                          </div>
+                        </td>
+                        <td class="small text-secondary">QR ✔ · hora servidor ✔ · hash único ✔</td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">312</td>
+                        <td>Carlos R.</td>
+                        <td>35 min</td>
+                        <td>58 min</td>
+                        <td>
+                          <span class="badge text-bg-danger">Fuera de tolerancia</span>
+                        </td>
+                        <td>
+                          <div class="d-flex gap-1">
+                            <div class="thumb thumb-antes">ANTES</div>
+                            <div class="thumb">DESP.</div>
+                          </div>
+                        </td>
+                        <td class="small text-secondary">QR ✔ · hora servidor ✔ · hash único ✔</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6 d-flex justify-content-between">
+                  Incidencias → Mantenimiento
+                  <button class="btn btn-primary btn-sm" type="button">+ Registrar incidencia</button>
+                </h3>
+
+                <div class="row row-cols-1 row-cols-md-3 g-2">
+                  <div class="col">
+                    <div class="bg-body-tertiary rounded p-2">
+                      <small class="text-secondary fw-bold">NUEVO</small>
+                      <div class="card card-body py-2 mt-1 small border-start border-4 border-danger">
+                        <strong>212 · TV sin señal</strong>
+                        Alta · Luis M.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="bg-body-tertiary rounded p-2">
+                      <small class="text-secondary fw-bold">EN PROCESO</small>
+                      <div class="card card-body py-2 mt-1 small border-start border-4 border-warning">
+                        <strong>305 · Silla rota</strong>
+                        Media · Téc. Pedro
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="bg-body-tertiary rounded p-2">
+                      <small class="text-secondary fw-bold">RESUELTO</small>
+                      <div class="card card-body py-2 mt-1 small border-start border-4 border-success">
+                        <strong>118 · Control remoto</strong>
+                        Baja · Téc. Pedro
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="tab-pane fade" id="v-mant" role="tabpanel">
+            <h2 class="h4 mb-0">🛠 Mantenimiento</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Bandeja</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Asignación a técnico</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">SLA y alertas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Historial por habitación</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Bandeja</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Asignación a técnico</span>
+                  <span class="badge text-bg-light border fw-normal p-2">SLA y alertas</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Historial por habitación</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-tiempos" role="tabpanel">
+            <h2 class="h4 mb-0">⏱ Tiempos y estándares</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Tiempo por tipo de cuarto</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Secuencia de limpieza</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Áreas administrativas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Real vs. estándar</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Tiempo por tipo de cuarto</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Secuencia de limpieza</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Áreas administrativas</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Real vs. estándar</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-personal" role="tabpanel">
+            <h2 class="h4 mb-0">👥 Personal</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Operarios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Supervisores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Turnos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Asistencia</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Desempeño</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Operarios</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Supervisores</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Turnos</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Asistencia</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Desempeño</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-tareo" role="tabpanel">
+            <h2 class="h4 mb-0">Tareo y pagos · Octubre 2026</h2>
+            <p class="text-secondary small mb-3">Consolidado mensual para Recursos Humanos</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Tareo diario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Tareo mensual</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Ajustes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Aprobación y cierre</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Exportar a RR.HH.</a>
+              </li>
+            </ul>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <button class="btn btn-primary btn-sm" type="button">Cerrar periodo</button>
+              <button class="btn btn-outline-secondary btn-sm" type="button">Exportar Excel</button>
+              <button class="btn btn-outline-secondary btn-sm" type="button">Exportar PDF</button>
+            </div>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>Operario</th>
+                        <th>Días</th>
+                        <th>Horas</th>
+                        <th>Habitaciones</th>
+                        <th>Eficiencia</th>
+                        <th>H. extra</th>
+                        <th>Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="fw-bold">Juan P.</td>
+                        <td>22</td>
+                        <td>176</td>
+                        <td>84</td>
+                        <td>96 %</td>
+                        <td>8</td>
+                        <td>
+                          <span class="badge text-bg-success">Aprobado</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">María L.</td>
+                        <td>21</td>
+                        <td>168</td>
+                        <td>79</td>
+                        <td>91 %</td>
+                        <td>4</td>
+                        <td>
+                          <span class="badge text-bg-warning">Pendiente</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">Carlos R.</td>
+                        <td>22</td>
+                        <td>176</td>
+                        <td>81</td>
+                        <td>87 %</td>
+                        <td>10</td>
+                        <td>
+                          <span class="badge text-bg-warning">Pendiente</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">Rosa T.</td>
+                        <td>20</td>
+                        <td>160</td>
+                        <td>74</td>
+                        <td>98 %</td>
+                        <td>0</td>
+                        <td>
+                          <span class="badge text-bg-success">Aprobado</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="fw-bold">Luis M.</td>
+                        <td>22</td>
+                        <td>176</td>
+                        <td>77</td>
+                        <td>93 %</td>
+                        <td>6</td>
+                        <td>
+                          <span class="badge text-bg-warning">Pendiente</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-dash" role="tabpanel">
+            <h2 class="h4 mb-0">📈 Dashboards</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Productividad</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Cumplimiento</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Calidad</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Mantenimiento</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Costos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Gerencial</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Auditoría</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Productividad</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Cumplimiento</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Calidad</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Mantenimiento</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Costos</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Gerencial</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Auditoría</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-rep" role="tabpanel">
+            <h2 class="h4 mb-0">📑 Reportes</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Productividad</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Galería de evidencias</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Tareo mensual</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Incidencias</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Auditoría</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Productividad</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Galería de evidencias</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Tareo mensual</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Incidencias</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Auditoría</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-cat" role="tabpanel">
+            <h2 class="h4 mb-0">🏨 Catálogos</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Hoteles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Pisos y secciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Habitaciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Tipos 1/2/3 camas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Tipos de limpieza</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Ítems e incidencias</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Calendario</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Hoteles</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Pisos y secciones</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Habitaciones</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Tipos 1/2/3 camas</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Tipos de limpieza</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Ítems e incidencias</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Calendario</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-seg" role="tabpanel">
+            <h2 class="h4 mb-0">🔐 Seguridad y roles</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Usuarios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Roles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Acceso por usuario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Políticas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Bitácora</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Usuarios</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Roles</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Acceso por usuario</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Políticas</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Bitácora</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="tab-pane fade" id="v-cfg" role="tabpanel">
+            <h2 class="h4 mb-0">⚙ Configuración</h2>
+            <p class="text-secondary small mb-3">Módulo definido en el documento de análisis · pantalla pendiente de
+              diseño detallado</p>
+            <ul class="nav nav-tabs mb-3 flex-nowrap overflow-auto">
+              <li class="nav-item">
+                <a class="nav-link text-nowrap active" href="#">Parámetros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Notificaciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Integraciones (PMS)</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Respaldos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-nowrap" href="#">Ayuda</a>
+              </li>
+            </ul>
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="h6">Opciones del menú horizontal</h3>
+                <div class="d-flex flex-wrap gap-2">
+                  <span class="badge text-bg-light border fw-normal p-2">Parámetros</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Notificaciones</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Integraciones (PMS)</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Respaldos</span>
+                  <span class="badge text-bg-light border fw-normal p-2">Ayuda</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
